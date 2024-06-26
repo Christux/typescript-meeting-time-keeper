@@ -1,0 +1,202 @@
+<div id="meeting">
+  <div id="header" class="flex col header">
+    <div class="flex row space-between">
+      <h1 id="meetingTitle"></h1>
+      <span id="meetingDuration"></span>
+      <button id="startMeeting">
+        <app-translate fr="Démarrer la réunion"
+          >Start the meeting</app-translate
+        >
+      </button>
+      <button id="stopMeeting" class="hidden">
+        <app-translate fr="Terminer la réunion">Stop the meeting</app-translate>
+      </button>
+      <button id="downloadMeeting" class="hidden">
+        <app-translate fr="Télécharger la réunion"
+          >Download the meeting</app-translate
+        >
+      </button>
+    </div>
+
+    <div class="flex col timer">
+      <progress value="0" max="1" id="meetingElapsedTimeProgress"></progress>
+      <div class="flex row space-around">
+        <div>
+          <app-translate fr="Temps écoulé">Elapsed time</app-translate>
+          &nbsp;:&nbsp;<span id="meetingElapsedTime"></span>&nbsp;
+        </div>
+        <div>
+          <app-translate fr="Temps restant">Remaining time</app-translate>
+          &nbsp;:&nbsp;<span id="meetingRemainingTime"></span>&nbsp;
+        </div>
+      </div>
+    </div>
+
+    <div class="flex col timer">
+      <progress
+        value="1"
+        max="1"
+        id="meetingRemainingTimeProgress"
+        class="rtl"
+      ></progress>
+      <div class="flex row space-around">
+        <div>
+          <app-translate fr="Temps nécessaire restant"
+            >Required remaing time</app-translate
+          >
+          &nbsp;:&nbsp;<span id="sectionRemainingTime"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="content">
+    <div id="meetingSections" class="flex col space-between"></div>
+  </div>
+
+  <div id="footer" class="flex col space-around">
+    <div class="flex row space-around copyright">
+      <div class="spacer"></div>
+
+      <div>Meeting time keeper, Copyright Christux</div>
+
+      <div>
+        <svg
+          class="fr hidden clickable"
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="20"
+          viewBox="0 0 3 2"
+        >
+          <path fill="#EC1920" d="M0 0h3v2H0z" />
+          <path fill="#fff" d="M0 0h2v2H0z" />
+          <path fill="#051440" d="M0 0h1v2H0z" />
+        </svg>
+        <svg
+          class="en hidden clickable"
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="20"
+          viewBox="0 0 60 30"
+        >
+          <clipPath id="a"><path d="M0 0v30h60V0z" /></clipPath>
+          <clipPath id="b">
+            <path d="M30 15h30v15zv15H0zH0V0zV0h30z" />
+          </clipPath>
+          <g clip-path="url(#a)">
+            <path d="M0 0v30h60V0z" fill="#012169" />
+            <path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6" />
+            <path
+              d="M0 0l60 30m0-30L0 30"
+              clip-path="url(#b)"
+              stroke="#C8102E"
+              stroke-width="4"
+            />
+            <path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10" />
+            <path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6" />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal hidden">
+  <div class="modal-content flex col">
+    <!-- <div class="modal-header flex row space-between">
+      <h2 class="title"></h2>
+      <span class="close">&times;</span>
+    </div>
+    <div class="modal-body"></div> -->
+  </div>
+</div>
+
+<template id="test-modal">
+  <span class="close">&times;</span>
+  <p>Some text in the Modal..</p>
+</template>
+
+<template id="upload-setting-modal">
+  <div class="modal-header flex row space-between">
+    <h2 class="title">
+      <app-translate fr="Import de la configuration"
+        >Import meeting settings</app-translate
+      >
+    </h2>
+  </div>
+  <div class="modal-body">
+    <input type="file" id="settingFile" accept=".json" />
+  </div>
+</template>
+
+<template id="chapterTemplate">
+  <div class="flex col chapter">
+    <div class="flex row start">
+      <div class="title"></div>
+    </div>
+    <div class="flex col timer">
+      <progress
+        value="1"
+        max="1"
+        class="remainingTimeProgress"
+        class="rtl"
+      ></progress>
+
+      <div class="flex row space-around">
+        <div>
+          <app-translate fr="Temps écoulé">Elapsed time</app-translate
+          >&nbsp;:&nbsp;<span class="elapsedTime"></span>&nbsp;/
+          <span class="durationTime"></span>
+        </div>
+        <div>
+          <app-translate fr="Temps restant">Remaining time</app-translate>
+          &nbsp;:&nbsp;<span class="remainingTime"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template id="sectionTemplate">
+  <div class="flex col section">
+    <div class="flex row space-between">
+      <div class="title"></div>
+      <div>
+        <button class="start hidden">
+          <app-translate fr="Démarrer">Start</app-translate>
+        </button>
+        <button class="pause hidden">
+          <app-translate fr="Pause">Pause</app-translate>
+        </button>
+        <button class="resume hidden">
+          <app-translate fr="Reprendre">Resume</app-translate>
+        </button>
+        <button class="stop hidden">
+          <app-translate fr="Terminer">Stop</app-translate>
+        </button>
+        <button class="restart hidden">
+          <app-translate fr="Redémarrer">Restart</app-translate>
+        </button>
+      </div>
+    </div>
+    <div class="flex col timer">
+      <progress
+        value="1"
+        max="1"
+        class="remainingTimeProgress"
+        class="rtl"
+      ></progress>
+      <div class="flex row space-around">
+        <div>
+          <app-translate fr="Temps écoulé">Elapsed time</app-translate
+          >&nbsp;:&nbsp;<span class="elapsedTime"></span>&nbsp;/
+          <span class="durationTime"></span>
+        </div>
+        <div>
+          <app-translate fr="Temps restant">Remaining time</app-translate>
+          &nbsp;:&nbsp;<span class="remainingTime"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
